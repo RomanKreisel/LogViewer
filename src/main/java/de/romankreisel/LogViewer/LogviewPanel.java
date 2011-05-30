@@ -32,12 +32,16 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
 		this.setLayout(new BorderLayout());
 		this.splitPane = new JSplitPane();
 		this.add(this.splitPane, BorderLayout.CENTER);
+		this.splitPane.setOneTouchExpandable(true);
 
 		this.textField = new JTextField();
-		this.splitPane.setRightComponent(this.textField);
-		this.textField.setColumns(10);
+		this.textField.setEditable(false);
+		this.textField.setColumns(35);
+		this.splitPane.setRightComponent(new JScrollPane(this.textField));
 
 		this.table = new JXTable();
+		this.table.setAutoCreateRowSorter(true);
+		this.table.setColumnControlVisible(true);
 		this.splitPane.setLeftComponent(new JScrollPane(this.table));
 		this.init();
 	}
@@ -53,7 +57,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
 	}
 
 	public double getSplitPanePosition() {
-		return this.splitPane.getDividerLocation() / this.splitPane.getSize().width;
+		return 1.0 * this.splitPane.getDividerLocation() / this.splitPane.getSize().width;
 	}
 
 	public List<LogRecord> getLogRecords() {

@@ -8,6 +8,10 @@ package de.romankreisel.LogViewer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  * Hello world!
  * 
@@ -18,6 +22,24 @@ public class LogViewer {
 	}
 
 	public static void testViewer() {
+		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			if ("Nimbus".equals(info.getName())) {
+				try {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				} catch (ClassNotFoundException e) {
+					// ignore
+				} catch (InstantiationException e) {
+					// ignore
+				} catch (IllegalAccessException e) {
+					// ignore
+				} catch (UnsupportedLookAndFeelException e) {
+					// ignore
+				}
+				break;
+			}
+		}
+
 		Logger testLogger = Logger.getLogger("TestLogger");
 		MemoryHandler memoryHandler = new MemoryHandler(30);
 		testLogger.setUseParentHandlers(false);
