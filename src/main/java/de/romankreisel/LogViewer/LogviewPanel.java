@@ -6,13 +6,15 @@
 package de.romankreisel.LogViewer;
 
 import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.LogRecord;
 
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -23,10 +25,11 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1061235427362096113L;
-	private final JTextField textField;
+	private final JEditorPane textPane;
 	private final JXTable table;
 	private LogTableModel tableModel;
 	private final JSplitPane splitPane;
+	private final static String emptyText = "<html><h1>Select line from log to inspect content</h1><html>";
 
 	public LogviewPanel() {
 		this.setLayout(new BorderLayout());
@@ -34,10 +37,9 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
 		this.add(this.splitPane, BorderLayout.CENTER);
 		this.splitPane.setOneTouchExpandable(true);
 
-		this.textField = new JTextField();
-		this.textField.setEditable(false);
-		this.textField.setColumns(35);
-		this.splitPane.setRightComponent(new JScrollPane(this.textField));
+		this.textPane = new JEditorPane("text/html", LogviewPanel.emptyText);
+		this.textPane.setEditable(false);
+		this.splitPane.setRightComponent(new JScrollPane(this.textPane));
 
 		this.table = new JXTable();
 		this.table.setAutoCreateRowSorter(true);
@@ -81,12 +83,32 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
 	private void showRecordDetails(LogRecord record) {
 		if (record != null) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("<HTML>");
-			sb.append(record.getMessage());
-			sb.append("</HTML>");
-			this.textField.setText(record.getMessage());
+			sb.append("<html>");
+			sb.append("<table>");
+			sb.append("<tr><td><b>Logger:</td><td>" + record.getLoggerName() + "</tr>");
+			sb.append("<tr><td><b>Sequence:</b></td><td>" + record.getSequenceNumber() + "</tr>");
+			sb.append("<tr><td><b>Time:</b></td><td>" + new SimpleDateFormat().format(new Date(record.getMillis())) + "</tr>");
+			sb.append("<tr><td><b>Source-class:</b></td><td>" + record.getSourceClassName() + "</tr>");
+			sb.append("<tr><td><b>Source-method:</b></td><td>" + record.getSourceMethodName() + "</tr>");
+			sb.append("<tr><td><b>Thread-ID:</b></td><td>" + record.getThreadID() + "</tr>");
+			sb.append("<tr><td><b>Level:</b></td><td>" + record.getLevel() + "</tr>");
+			sb.append("<tr><td><b>Message:</b></td><td>" + record.getMessage() + "</tr>");
+			sb.append("</table>");
+			sb.append("<hr />");
+			if (record.getThrown() != null) {
+				Throwable throwable = record.getThrown();
+				if (throwable.getStackTrace() != null) {
+					sb.append("<b>Stacktrace:</b><br /><table>");
+					for (int i = 0; i < throwable.getStackTrace().length; ++i) {
+						sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "</td><td>" + (throwable.getStackTrace()[i].getLineNumber() > 0 ? throwable.getStackTrace()[i].getLineNumber() : "") + "</td></tr>");
+					}
+					sb.append("</table>");
+				}
+			}
+			sb.append("</html>");
+			this.textPane.setText(sb.toString());
 		} else {
-			this.textField.setText("");
+			this.textPane.setText(LogviewPanel.emptyText);
 		}
 	}
 }
