@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2011, Roman Kreisel
  * This file is licensed under the terms of the BSD-License
- * http://www.opensource.org/licenses/bsd-license.php 
+ * http://www.opensource.org/licenses/bsd-license.php
  */
 
 package de.romankreisel.LogViewer;

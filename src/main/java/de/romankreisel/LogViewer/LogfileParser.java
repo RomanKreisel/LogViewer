@@ -165,10 +165,13 @@ public class LogfileParser {
                                 if (eventReader.peek().isCharacters()) {
                                     event = eventReader.nextEvent();
                                     String exceptionString = event.asCharacters().toString();
-                                    String exceptionClassName = exceptionString.split(":").length > 0 ? exceptionString
-                                            .split(":")[0].trim() : null;
-                                    String exceptionText = exceptionString.split(":").length > 0 ? exceptionString
-                                            .substring(exceptionString.indexOf(':') + 1).trim() : exceptionString;
+                                    String exceptionClassName = null;
+                                    String exceptionText = exceptionString.trim();
+                                    if (exceptionString.split(":").length > 0) {
+                                        exceptionClassName = exceptionString.split(":")[0].trim();
+                                        exceptionText = exceptionString.substring(exceptionString.indexOf(':') + 1);
+                                        exceptionText = exceptionText.trim();
+                                    }
                                     Class<?> exceptionClass = null;
                                     if (exceptionClassName != null) {
                                         try {
