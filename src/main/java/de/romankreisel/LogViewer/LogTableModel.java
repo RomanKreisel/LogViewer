@@ -16,8 +16,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class LogTableModel extends AbstractTableModel {
     /**
-	 * 
-	 */
+     *
+     */
     private static final long serialVersionUID = 6296572154686892582L;
     private List<LogRecord> allLogRecords = new LinkedList<LogRecord>();
     private List<LogRecord> shownRecords = this.allLogRecords;

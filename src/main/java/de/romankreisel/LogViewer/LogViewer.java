@@ -23,13 +23,13 @@ public class LogViewer {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
                 } catch (ClassNotFoundException e) {
-                    // ignore
+                    System.err.println("Nimbus not found, not changing Look&Feel");
                 } catch (InstantiationException e) {
-                    // ignore
+                    System.err.println("Nimbus not found, not changing Look&Feel");
                 } catch (IllegalAccessException e) {
-                    // ignore
+                    System.err.println("Nimbus not found, not changing Look&Feel");
                 } catch (UnsupportedLookAndFeelException e) {
-                    // ignore
+                    System.err.println("Nimbus not found, not changing Look&Feel");
                 }
                 break;
             }

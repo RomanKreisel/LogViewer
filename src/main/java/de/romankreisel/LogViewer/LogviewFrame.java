@@ -27,8 +27,8 @@ import javax.xml.stream.XMLStreamException;
 public class LogviewFrame extends JFrame {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -6889068644722360234L;
     private final LogviewPanel logviewPanel;
     private File lastDirectory = new File(System.getProperty("user.dir"));

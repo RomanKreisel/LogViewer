@@ -22,8 +22,8 @@ import org.jdesktop.swingx.JXTable;
 
 public class LogviewPanel extends JPanel implements ListSelectionListener {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 1061235427362096113L;
     private final JEditorPane textPane;
     private final JXTable table;
