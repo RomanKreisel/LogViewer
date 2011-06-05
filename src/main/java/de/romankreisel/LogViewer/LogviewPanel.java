@@ -101,11 +101,11 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
                 if (throwable.getStackTrace() != null) {
                     sb.append("<b>Stacktrace:</b><br /><table>");
                     for (int i = 0; i < throwable.getStackTrace().length; ++i) {
-                        sb.append("<tr><td>"
-                                + throwable.getStackTrace()[i].getClassName()
-                                + "</td><td>"
-                                + (throwable.getStackTrace()[i].getLineNumber() > 0 ? throwable.getStackTrace()[i]
-                                        .getLineNumber() : "") + "</td></tr>");
+                        sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "</td><td>");
+                        if (throwable.getStackTrace()[i].getLineNumber() > 0) {
+                            sb.append(throwable.getStackTrace()[i].getLineNumber());
+                        }
+                        sb.append("</td></tr>");
                     }
                     sb.append("</table>");
                 }
