@@ -58,7 +58,7 @@
 			<name>Roman Kreisel</name>
 			<email>mail@romankreisel.de</email>
 			<url>http://www.romankreisel.de</url>
-			<timezone>GMT+1 (Berlin)</timezone>
+			<timezone>+1</timezone>
 			<roles>
 			</roles>
 		</developer>
