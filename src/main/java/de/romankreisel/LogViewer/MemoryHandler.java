@@ -9,6 +9,13 @@ import java.util.LinkedList;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+/**
+ * Handler for java.util.logging which collects the LogRecords in memory. Use
+ * this class, if you want to embedd LogViewer in your application and if you
+ * want to show a live-view of your current application-log.
+ * 
+ * @author Roman Kreisel <mail@romankreisel.de>
+ */
 public class MemoryHandler extends Handler {
 
     private final int size;
@@ -39,6 +46,9 @@ public class MemoryHandler extends Handler {
         this.records.add(record);
     }
 
+    /**
+     * @return all records collected by this handler
+     */
     public LinkedList<LogRecord> getRecords() {
         return this.records;
     }
