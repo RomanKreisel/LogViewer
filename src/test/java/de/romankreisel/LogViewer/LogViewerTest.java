@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  */
 public class LogViewerTest extends TestCase {
     /**
-     * Create the test case
+     * Create the test case.
      * 
      * @param testName
      *            name of the test case
@@ -31,7 +31,7 @@ public class LogViewerTest extends TestCase {
     }
 
     /**
-     * Rigourous Test :-)
+     * Always-True-Test.
      */
     public void testApp() {
         assertTrue(true);
