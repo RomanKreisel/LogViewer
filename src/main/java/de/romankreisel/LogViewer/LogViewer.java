@@ -11,11 +11,25 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+/**
+ * Class to make the LogViewer-Project runable as standalone-product.
+ * 
+ * @author Roman Kreisel <mail@romankreisel.de>
+ */
 public final class LogViewer {
+    /**
+     * private Constructor which isn't ever used.
+     */
     private LogViewer() {
         super();
     }
 
+    /**
+     * So far accepts one parameter containing logfile.
+     * 
+     * @param args
+     *            first parameter may contain path to logfile.
+     */
     public static void main(String[] args) {
         for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {

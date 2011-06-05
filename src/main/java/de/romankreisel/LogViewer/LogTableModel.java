@@ -14,6 +14,11 @@ import java.util.logging.LogRecord;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * TableModel for LogRecords.
+ * 
+ * @author Roman Kreisel <mail@romankreisel.de>
+ */
 public class LogTableModel extends AbstractTableModel {
     /**
      *
@@ -130,6 +135,9 @@ public class LogTableModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
+    /**
+     * Filter records shown by this tableModel.
+     */
     private void filterRecords() {
         this.shownRecords = new LinkedList<LogRecord>();
         for (LogRecord record : this.allLogRecords) {
