@@ -25,10 +25,6 @@ import org.jdesktop.swingx.JXTable;
  * 
  * @author Roman Kreisel <mail@romankreisel.de>
  */
-/**
- * @author roman
- * 
- */
 public class LogviewPanel extends JPanel implements ListSelectionListener {
     /**
      *
