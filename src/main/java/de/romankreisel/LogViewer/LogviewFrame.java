@@ -24,6 +24,12 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 
+/**
+ * LogViewer-JFrame - use this class if you're searching for an easy way to
+ * embed LogViewer in your project.
+ * 
+ * @author Roman Kreisel <mail@romankreisel.de>
+ */
 public class LogviewFrame extends JFrame {
 
     /**
@@ -35,14 +41,25 @@ public class LogviewFrame extends JFrame {
     private FileFilter filter = null;
     private String frameTitle = "LogViewer";
 
+    /**
+     * @return the last Directory from which a logfile was opened
+     */
     public File getLastDirectory() {
         return this.lastDirectory;
     }
 
+    /**
+     * @param lastDirectory
+     *            sets the directory the open-dialog should initially show
+     */
     public void setLastDirectory(File lastDirectory) {
         this.lastDirectory = lastDirectory;
     }
 
+    /**
+     * @throws HeadlessException
+     *             if GraphicsEnvironment.isHeadless() returns true.
+     */
     public LogviewFrame() throws HeadlessException {
         this.setTitle(this.frameTitle);
         JPanel southPanel = new JPanel();
@@ -86,9 +103,16 @@ public class LogviewFrame extends JFrame {
         this.init();
     }
 
+    /**
+     * Initializes this frame - called by constructor.
+     */
     private void init() {
     }
 
+    /**
+     * @param file
+     *            open this file in LogviewFrame
+     */
     public void openFile(File file) {
         try {
             List<LogRecord> logRecords = LogfileParser.parseXML(null, file);
@@ -104,6 +128,9 @@ public class LogviewFrame extends JFrame {
         }
     }
 
+    /**
+     * @return embedded LogviewPanel
+     */
     public LogviewPanel getLogviewPanel() {
         return this.logviewPanel;
     }

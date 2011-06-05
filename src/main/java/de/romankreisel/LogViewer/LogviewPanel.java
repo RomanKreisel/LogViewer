@@ -20,6 +20,15 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
 
+/**
+ * Use this class if you want to embedd the LogViewer in your own Frame.
+ * 
+ * @author Roman Kreisel <mail@romankreisel.de>
+ */
+/**
+ * @author roman
+ * 
+ */
 public class LogviewPanel extends JPanel implements ListSelectionListener {
     /**
      *
@@ -31,6 +40,9 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
     private final JSplitPane splitPane;
     private static final String EMPTY_TEXT = "<html><h1>Select line from log to inspect content</h1><html>";
 
+    /**
+     * Constructs a new LogviewPanel.
+     */
     public LogviewPanel() {
         this.setLayout(new BorderLayout());
         this.splitPane = new JSplitPane();
@@ -48,24 +60,41 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.init();
     }
 
+    /**
+     * Initializes Panel.
+     */
     private void init() {
         this.tableModel = new LogTableModel();
         this.table.setModel(this.tableModel);
         this.table.getSelectionModel().addListSelectionListener(this);
     }
 
+    /**
+     * @param position
+     *            the position of the splitpaneDivider
+     */
     public void setSplitPanePosition(double position) {
         this.splitPane.setDividerLocation(position);
     }
 
+    /**
+     * @return the current position of the splitpaneDivider
+     */
     public double getSplitPanePosition() {
         return 1.0 * this.splitPane.getDividerLocation() / this.splitPane.getSize().width;
     }
 
+    /**
+     * @return all logRecords contained in this viewer.
+     */
     public List<LogRecord> getLogRecords() {
         return this.tableModel.getLogRecords();
     }
 
+    /**
+     * @param logRecords
+     *            show this records in LogviewPanel
+     */
     public void setLogRecords(List<LogRecord> logRecords) {
         this.tableModel.setLogRecords(logRecords);
         this.table.packAll();
@@ -80,6 +109,10 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.showRecordDetails(record);
     }
 
+    /**
+     * @param record
+     *            Show this record in the detail-view.
+     */
     private void showRecordDetails(LogRecord record) {
         if (record != null) {
             StringBuffer sb = new StringBuffer();
