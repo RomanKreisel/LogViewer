@@ -11,36 +11,36 @@ import java.util.logging.LogRecord;
 
 public class MemoryHandler extends Handler {
 
-	private final int size;
-	private final LinkedList<LogRecord> records;
+    private final int size;
+    private final LinkedList<LogRecord> records;
 
-	/**
-	 * @param size
-	 *            defines the maximum size of entries in this memory handler
-	 */
-	public MemoryHandler(int size) {
-		this.size = size;
-		this.records = new LinkedList<LogRecord>();
-	}
+    /**
+     * @param size
+     *            defines the maximum size of entries in this memory handler
+     */
+    public MemoryHandler(int size) {
+        this.size = size;
+        this.records = new LinkedList<LogRecord>();
+    }
 
-	@Override
-	public void close() throws SecurityException {
-	}
+    @Override
+    public void close() throws SecurityException {
+    }
 
-	@Override
-	public void flush() {
-	}
+    @Override
+    public void flush() {
+    }
 
-	@Override
-	public void publish(LogRecord record) {
-		if (this.records.size() >= this.size) {
-			this.records.remove(0);
-		}
-		this.records.add(record);
-	}
+    @Override
+    public void publish(LogRecord record) {
+        if (this.records.size() >= this.size) {
+            this.records.remove(0);
+        }
+        this.records.add(record);
+    }
 
-	public LinkedList<LogRecord> getRecords() {
-		return this.records;
-	}
+    public LinkedList<LogRecord> getRecords() {
+        return this.records;
+    }
 
 }

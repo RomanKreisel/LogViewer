@@ -16,34 +16,34 @@ import javax.swing.UnsupportedLookAndFeelException;
  * 
  */
 public class LogViewer {
-	public static void main(String[] args) {
-		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-			if ("Nimbus".equals(info.getName())) {
-				try {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				} catch (ClassNotFoundException e) {
-					// ignore
-				} catch (InstantiationException e) {
-					// ignore
-				} catch (IllegalAccessException e) {
-					// ignore
-				} catch (UnsupportedLookAndFeelException e) {
-					// ignore
-				}
-				break;
-			}
-		}
-		LogviewFrame mainFrame = new LogviewFrame();
-		if (args.length > 0) {
-			if (args.length < 2) {
-				File logFile = new File(args[0]);
-				if (logFile.exists() && logFile.isFile()) {
-					mainFrame.openFile(logFile);
-				}
-			}
-		}
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-	}
+    public static void main(String[] args) {
+        for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                try {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                } catch (ClassNotFoundException e) {
+                    // ignore
+                } catch (InstantiationException e) {
+                    // ignore
+                } catch (IllegalAccessException e) {
+                    // ignore
+                } catch (UnsupportedLookAndFeelException e) {
+                    // ignore
+                }
+                break;
+            }
+        }
+        LogviewFrame mainFrame = new LogviewFrame();
+        if (args.length > 0) {
+            if (args.length < 2) {
+                File logFile = new File(args[0]);
+                if (logFile.exists() && logFile.isFile()) {
+                    mainFrame.openFile(logFile);
+                }
+            }
+        }
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+    }
 }

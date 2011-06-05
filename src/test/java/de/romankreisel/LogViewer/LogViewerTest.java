@@ -13,27 +13,27 @@ import junit.framework.TestSuite;
  * Unit test for simple App.
  */
 public class LogViewerTest extends TestCase {
-	/**
-	 * Create the test case
-	 * 
-	 * @param testName
-	 *            name of the test case
-	 */
-	public LogViewerTest(String testName) {
-		super(testName);
-	}
+    /**
+     * Create the test case
+     * 
+     * @param testName
+     *            name of the test case
+     */
+    public LogViewerTest(String testName) {
+        super(testName);
+    }
 
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite() {
-		return new TestSuite(LogViewerTest.class);
-	}
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite() {
+        return new TestSuite(LogViewerTest.class);
+    }
 
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testApp() {
-		assertTrue(true);
-	}
+    /**
+     * Rigourous Test :-)
+     */
+    public void testApp() {
+        assertTrue(true);
+    }
 }
