@@ -22,14 +22,14 @@ import org.jdesktop.swingx.JXTable;
 
 public class LogviewPanel extends JPanel implements ListSelectionListener {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1061235427362096113L;
     private final JEditorPane textPane;
     private final JXTable table;
     private LogTableModel tableModel;
     private final JSplitPane splitPane;
-    private final static String emptyText = "<html><h1>Select line from log to inspect content</h1><html>";
+    private static final String EMPTY_TEXT = "<html><h1>Select line from log to inspect content</h1><html>";
 
     public LogviewPanel() {
         this.setLayout(new BorderLayout());
@@ -37,7 +37,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.add(this.splitPane, BorderLayout.CENTER);
         this.splitPane.setOneTouchExpandable(true);
 
-        this.textPane = new JEditorPane("text/html", LogviewPanel.emptyText);
+        this.textPane = new JEditorPane("text/html", LogviewPanel.EMPTY_TEXT);
         this.textPane.setEditable(false);
         this.splitPane.setRightComponent(new JScrollPane(this.textPane));
 
@@ -113,7 +113,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
             sb.append("</html>");
             this.textPane.setText(sb.toString());
         } else {
-            this.textPane.setText(LogviewPanel.emptyText);
+            this.textPane.setText(LogviewPanel.EMPTY_TEXT);
         }
     }
 }

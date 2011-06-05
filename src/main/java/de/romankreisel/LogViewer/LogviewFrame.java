@@ -27,7 +27,7 @@ import javax.xml.stream.XMLStreamException;
 public class LogviewFrame extends JFrame {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -6889068644722360234L;
     private final LogviewPanel logviewPanel;
@@ -91,7 +91,7 @@ public class LogviewFrame extends JFrame {
 
     public void openFile(File file) {
         try {
-            List<LogRecord> logRecords = LogfileParser.parseXML(file);
+            List<LogRecord> logRecords = LogfileParser.parseXML(null, file);
             LogviewFrame.this.lastDirectory = file.getParentFile();
             LogviewFrame.this.logviewPanel.setLogRecords(logRecords);
             LogviewFrame.this.setTitle(LogviewFrame.this.frameTitle + " - " + file.getName());

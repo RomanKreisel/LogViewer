@@ -12,9 +12,10 @@ import java.io.InputStream;
 import java.util.LinkedList;
 
 public class XMLLogfileInputStream extends FilterInputStream {
-    private static int[] invalidCharacters = {0x1b};
+    private static final int ESCAPE = 0x1b;
+    private static int[] invalidCharacters = {ESCAPE};
     private LinkedList<Character> lastChars = new LinkedList<Character>();
-    private final static int maxLastCharsWindow = 6;
+    private static final int MAX_LAST_CHARS_WINDOW = 6;
     private LinkedList<Character> attachedChars = null;
 
     public XMLLogfileInputStream(InputStream in) {
@@ -22,7 +23,7 @@ public class XMLLogfileInputStream extends FilterInputStream {
     }
 
     private void pushChar(char c) {
-        if (this.lastChars.size() > maxLastCharsWindow) {
+        if (this.lastChars.size() > MAX_LAST_CHARS_WINDOW) {
             this.lastChars.remove(0);
         }
         this.lastChars.add(c);

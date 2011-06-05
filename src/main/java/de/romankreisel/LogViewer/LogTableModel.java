@@ -19,6 +19,16 @@ public class LogTableModel extends AbstractTableModel {
      *
      */
     private static final long serialVersionUID = 6296572154686892582L;
+
+    private static final int COLUMN_SEQUENCE = 0;
+    private static final int COLUMN_TIME = 1;
+    private static final int COLUMN_LEVEL = 2;
+    private static final int COLUMN_MESSAGE = 3;
+    private static final int COLUMN_SOURCE_CLASS = 4;
+    private static final int COLUMN_SOURCE_METHOD = 5;
+    private static final int COLUMN_THREAD_ID = 6;
+    private static final int COLUMN_THROWABLE = 7;
+
     private List<LogRecord> allLogRecords = new LinkedList<LogRecord>();
     private List<LogRecord> shownRecords = this.allLogRecords;
     private Level minimumLevel = Level.ALL;
@@ -31,13 +41,13 @@ public class LogTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
-        case 0:
+        case COLUMN_SEQUENCE:
             return Long.class;
-        case 2:
+        case COLUMN_LEVEL:
             return Level.class;
-        case 6:
+        case COLUMN_THREAD_ID:
             return Integer.class;
-        case 7:
+        case COLUMN_THROWABLE:
             return Boolean.class;
         default:
             return String.class;
@@ -47,21 +57,21 @@ public class LogTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         switch (column) {
-        case 0:
+        case COLUMN_SEQUENCE:
             return "Sequence";
-        case 1:
+        case COLUMN_TIME:
             return "Time";
-        case 2:
+        case COLUMN_LEVEL:
             return "Level";
-        case 3:
+        case COLUMN_MESSAGE:
             return "Message";
-        case 4:
+        case COLUMN_SOURCE_CLASS:
             return "Source-Class";
-        case 5:
+        case COLUMN_SOURCE_METHOD:
             return "Source-Method";
-        case 6:
+        case COLUMN_THREAD_ID:
             return "Thread-ID";
-        case 7:
+        case COLUMN_THROWABLE:
             return "Throwable";
         default:
             return "Error";
@@ -82,21 +92,21 @@ public class LogTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         LogRecord record = this.allLogRecords.get(row);
         switch (column) {
-        case 0:
+        case COLUMN_SEQUENCE:
             return record.getSequenceNumber();
-        case 1:
+        case COLUMN_TIME:
             return new SimpleDateFormat().format(new Date(record.getMillis()));
-        case 2:
+        case COLUMN_LEVEL:
             return record.getLevel();
-        case 3:
+        case COLUMN_MESSAGE:
             return record.getMessage();
-        case 4:
+        case COLUMN_SOURCE_CLASS:
             return record.getSourceClassName();
-        case 5:
+        case COLUMN_SOURCE_METHOD:
             return record.getSourceMethodName();
-        case 6:
+        case COLUMN_THREAD_ID:
             return record.getThreadID();
-        case 7:
+        case COLUMN_THROWABLE:
             return Boolean.valueOf(record.getThrown() != null);
         default:
             return "Error";

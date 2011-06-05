@@ -11,10 +11,11 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/**
- * Hello world!
- */
-public class LogViewer {
+public final class LogViewer {
+    private LogViewer() {
+        super();
+    }
+
     public static void main(String[] args) {
         for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
