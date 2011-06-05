@@ -5,8 +5,7 @@
  */
 package de.romankreisel.LogViewer;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.File;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -18,10 +17,6 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class LogViewer {
 	public static void main(String[] args) {
-		LogViewer.testViewer();
-	}
-
-	public static void testViewer() {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 			if ("Nimbus".equals(info.getName())) {
 				try {
@@ -39,23 +34,16 @@ public class LogViewer {
 				break;
 			}
 		}
-
-		Logger testLogger = Logger.getLogger("TestLogger");
-		MemoryHandler memoryHandler = new MemoryHandler(30);
-		testLogger.setUseParentHandlers(false);
-		testLogger.setLevel(Level.ALL);
-		testLogger.addHandler(memoryHandler);
-		testLogger.log(Level.INFO, "Info");
-		testLogger.log(Level.FINE, "Fine");
-		testLogger.log(Level.FINER, "Finer");
-		testLogger.log(Level.FINEST, "Finest");
-		testLogger.log(Level.WARNING, "Warning", new Exception("Testexception"));
-		testLogger.log(Level.SEVERE, "Severe", new NullPointerException("Test-NPE"));
-
 		LogviewFrame mainFrame = new LogviewFrame();
-		mainFrame.getLogviewPanel().setLogRecords(memoryHandler.getRecords());
+		if (args.length > 0) {
+			if (args.length < 2) {
+				File logFile = new File(args[0]);
+				if (logFile.exists() && logFile.isFile()) {
+					mainFrame.openFile(logFile);
+				}
+			}
+		}
 		mainFrame.pack();
 		mainFrame.setVisible(true);
-
 	}
 }
