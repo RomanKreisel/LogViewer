@@ -41,7 +41,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
      */
     public LogviewPanel() {
         this.setLayout(new BorderLayout());
-        this.splitPane = new JSplitPane();
+        this.splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         this.add(this.splitPane, BorderLayout.CENTER);
         this.splitPane.setOneTouchExpandable(true);
 
@@ -132,7 +132,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
                     for (int i = 0; i < throwable.getStackTrace().length; ++i) {
                         sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "</td><td>");
                         if (throwable.getStackTrace()[i].getLineNumber() > 0) {
-                            sb.append(throwable.getStackTrace()[i].getLineNumber());
+                            sb.append("(Line " + throwable.getStackTrace()[i].getLineNumber() + ")");
                         }
                         sb.append("</td></tr>");
                     }

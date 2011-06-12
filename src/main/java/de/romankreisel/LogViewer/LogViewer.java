@@ -59,5 +59,6 @@ public final class LogViewer {
         }
         mainFrame.pack();
         mainFrame.setVisible(true);
+        mainFrame.getLogviewPanel().setSplitPanePosition(0.5);
     }
 }
