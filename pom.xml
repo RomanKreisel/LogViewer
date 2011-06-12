@@ -12,7 +12,7 @@
 	<url>https://github.com/RomanKreisel/LogViewer</url>
 	<scm>
 		<url>https://github.com/RomanKreisel/LogViewer.git</url>
-		<connection>scm:git://github.com/RomanKreisel/LogViewer.git</connection>
+		<connection>https://RomanKreisel@github.com/RomanKreisel/LogViewer.git</connection>
 		<developerConnection>scm:ssh://git@github.com:RomanKreisel/LogViewer.git</developerConnection>
 	</scm>
 	<licenses>
