@@ -63,7 +63,7 @@ public class LogTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
         case COLUMN_SEQUENCE:
-            return "Sequence";
+            return "#";
         case COLUMN_TIME:
             return "Time";
         case COLUMN_LEVEL:
@@ -77,7 +77,7 @@ public class LogTableModel extends AbstractTableModel {
         case COLUMN_THREAD_ID:
             return "Thread-ID";
         case COLUMN_THROWABLE:
-            return "Throwable";
+            return "T";
         default:
             return "Error";
         }
