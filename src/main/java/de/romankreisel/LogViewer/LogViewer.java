@@ -60,6 +60,7 @@ public final class LogViewer {
         }
         mainFrame.pack();
         mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(LogviewFrame.EXIT_ON_CLOSE);
         mainFrame.getLogviewPanel().setSplitPanePosition(0.5);
     }
 }

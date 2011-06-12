@@ -6,9 +6,12 @@
 package de.romankreisel.LogViewer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import javax.swing.JEditorPane;
@@ -19,6 +22,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.AbstractHighlighter;
+import org.jdesktop.swingx.decorator.ComponentAdapter;
+import org.jdesktop.swingx.decorator.HighlightPredicate;
+import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 /**
  * Use this class if you want to embedd the LogViewer in your own Frame.
@@ -53,6 +60,34 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.table.setAutoCreateRowSorter(true);
         this.table.setColumnControlVisible(true);
         this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_LAST_COLUMN);
+        this.table.addHighlighter(HighlighterFactory.createAlternateStriping());
+        this.table.addHighlighter(new AbstractHighlighter(HighlightPredicate.ALWAYS) {
+
+            @Override
+            protected Component doHighlight(Component component, ComponentAdapter adapter) {
+                Object levelColumn = adapter.getValue(2);
+                if (levelColumn instanceof Level) {
+                    Level level = (Level) levelColumn;
+                    if (level.intValue() <= Level.FINEST.intValue()) {
+                        component.setBackground(new Color(0xf0, 0xf0, 0xf0));
+                    } else if (level.intValue() <= Level.FINER.intValue()) {
+                        component.setBackground(Color.lightGray);
+                    } else if (level.intValue() <= Level.FINE.intValue()) {
+                        component.setBackground(Color.gray);
+                        component.setForeground(new Color(0xf0, 0xf0, 0xf0));
+                    } else if (level.intValue() <= Level.CONFIG.intValue()) {
+                        component.setBackground(new Color(0xa0, 0xff, 0xa0));
+                    } else if (level.intValue() <= Level.INFO.intValue()) {
+                        component.setBackground(Color.green);
+                    } else if (level.intValue() <= Level.WARNING.intValue()) {
+                        component.setBackground(Color.yellow);
+                    } else {
+                        component.setBackground(Color.red);
+                    }
+                }
+                return component;
+            }
+        });
         this.splitPane.setLeftComponent(new JScrollPane(this.table));
         this.init();
     }
