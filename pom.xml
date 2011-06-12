@@ -17,9 +17,8 @@
 	</scm>
 	<licenses>
 		<license>
-			<name>BSD License</name>
-			<url>http://www.opensource.org/licenses/bsd-license.php</url>
-			<comments>Berkeley Software Distribution-License</comments>
+			<name>GNU Lesser General Public License v2.1</name>
+			<url>http://www.gnu.de/documents/lgpl-2.1.de.html</url>
 		</license>
 	</licenses>
 	<distributionManagement>

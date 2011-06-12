@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2011, Roman Kreisel
+ * This file is licensed under the terms of the GNU Lesser General Public License 2.1
+ * http://www.gnu.org/licenses/lgpl-2.1.txt
+ */
+
 package de.romankreisel.LogViewer;
 
 import java.io.File;
@@ -28,10 +34,6 @@ import javax.xml.stream.events.XMLEvent;
  * @author Roman Kreisel <mail@romankreisel.de>
  */
 public final class LogfileParser {
-    /*
-     * Copyright (c) 2011, Roman Kreisel This file is licensed under the terms
-     * of the BSD-License http://www.opensource.org/licenses/bsd-license.php
-     */
 
     /**
      * private constructor which is never used at all.
