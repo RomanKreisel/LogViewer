@@ -12,7 +12,6 @@
 	<url>https://github.com/RomanKreisel/LogViewer</url>
 	<scm>
 		<url>https://github.com/RomanKreisel/LogViewer.git</url>
-		<developerConnection>scm:ssh://git@github.com:RomanKreisel/LogViewer.git</developerConnection>
 	</scm>
 	<licenses>
 		<license>
