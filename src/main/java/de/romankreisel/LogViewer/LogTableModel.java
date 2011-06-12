@@ -26,14 +26,14 @@ public class LogTableModel extends AbstractTableModel {
      */
     private static final long serialVersionUID = 6296572154686892582L;
 
-    private static final int COLUMN_SEQUENCE = 0;
-    private static final int COLUMN_TIME = 1;
-    private static final int COLUMN_LEVEL = 2;
-    private static final int COLUMN_MESSAGE = 3;
-    private static final int COLUMN_SOURCE_CLASS = 4;
-    private static final int COLUMN_SOURCE_METHOD = 5;
-    private static final int COLUMN_THREAD_ID = 6;
-    private static final int COLUMN_THROWABLE = 7;
+    public static final int COLUMN_SEQUENCE = 0;
+    public static final int COLUMN_TIME = 1;
+    public static final int COLUMN_LEVEL = 2;
+    public static final int COLUMN_MESSAGE = 3;
+    public static final int COLUMN_SOURCE_CLASS = 4;
+    public static final int COLUMN_SOURCE_METHOD = 5;
+    public static final int COLUMN_THREAD_ID = 6;
+    public static final int COLUMN_THROWABLE = 7;
 
     private List<LogRecord> allLogRecords = new LinkedList<LogRecord>();
     private List<LogRecord> shownRecords = this.allLogRecords;
@@ -76,7 +76,7 @@ public class LogTableModel extends AbstractTableModel {
         case COLUMN_SOURCE_METHOD:
             return "Source-Method";
         case COLUMN_THREAD_ID:
-            return "Thread-ID";
+            return "T-ID";
         case COLUMN_THROWABLE:
             return "T";
         default:
@@ -97,6 +97,7 @@ public class LogTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         LogRecord record = this.allLogRecords.get(row);
+        String retVal;
         switch (column) {
         case COLUMN_SEQUENCE:
             return record.getSequenceNumber();
@@ -107,7 +108,13 @@ public class LogTableModel extends AbstractTableModel {
         case COLUMN_MESSAGE:
             return record.getMessage();
         case COLUMN_SOURCE_CLASS:
-            return record.getSourceClassName();
+            retVal = record.getSourceClassName();
+            if (retVal.contains(".") && retVal.indexOf(".") != retVal.length()) {
+                retVal = retVal.substring(retVal.lastIndexOf('.') + 1);
+
+            }
+            return retVal;
+
         case COLUMN_SOURCE_METHOD:
             return record.getSourceMethodName();
         case COLUMN_THREAD_ID:

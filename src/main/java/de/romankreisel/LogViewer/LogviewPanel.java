@@ -52,6 +52,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.table = new JXTable();
         this.table.setAutoCreateRowSorter(true);
         this.table.setColumnControlVisible(true);
+        this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_LAST_COLUMN);
         this.splitPane.setLeftComponent(new JScrollPane(this.table));
         this.init();
     }
@@ -93,7 +94,17 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
      */
     public void setLogRecords(List<LogRecord> logRecords) {
         this.tableModel.setLogRecords(logRecords);
-        this.table.packAll();
+        int totalSize = 0;
+        this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
+        this.table.packColumn(LogTableModel.COLUMN_MESSAGE, 0);
+        for (int i = 0; i < this.table.getColumnCount(); ++i) {
+            if (i != LogTableModel.COLUMN_MESSAGE) {
+                this.table.packColumn(i, 0);
+                totalSize += this.table.getColumnExt(i).getPreferredWidth();
+            }
+        }
+        this.table.packColumn(LogTableModel.COLUMN_MESSAGE, 0, this.table.getWidth() - (50 + totalSize));
+        this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_LAST_COLUMN);
     }
 
     @Override
