@@ -211,12 +211,21 @@ public class LogviewPanel extends JPanel implements ListSelectionListener, Compo
                 sb.append("<table>");
                 sb.append("<tr><td valign=\"top\"><b>Type:</td><td>" + throwable.getClass().getName() + "</tr>");
                 sb.append("<tr><td valign=\"top\"><b>Message:</td><td>" + throwable.getMessage() + "</tr>");
+                sb.append("<tr><td valign=\"top\"><b>Localized Message:</td><td>" + throwable.getLocalizedMessage()
+                        + "</tr>");
                 if (throwable.getStackTrace() != null) {
                     sb.append("<tr><td valign=\"top\"><b>Stacktrace:</td><td><table>");
                     for (int i = 0; i < throwable.getStackTrace().length; ++i) {
-                        sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "</td><td>");
+                        sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "."
+                                + throwable.getStackTrace()[i].getMethodName() + "()</td><td>");
                         if (throwable.getStackTrace()[i].getLineNumber() > 0) {
-                            sb.append("(Line " + throwable.getStackTrace()[i].getLineNumber() + ")");
+                            String filename = throwable.getStackTrace()[i].getFileName();
+                            if (filename != null && !filename.isEmpty()) {
+                                sb.append(" (" + throwable.getStackTrace()[i].getFileName() + ":"
+                                        + throwable.getStackTrace()[i].getLineNumber() + ")");
+                            } else {
+                                sb.append("(Line " + throwable.getStackTrace()[i].getLineNumber() + ")");
+                            }
                         }
                         sb.append("</td></tr>");
                     }
