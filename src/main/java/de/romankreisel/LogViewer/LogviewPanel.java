@@ -60,7 +60,6 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.table.setAutoCreateRowSorter(true);
         this.table.setColumnControlVisible(true);
         this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_LAST_COLUMN);
-        this.table.addHighlighter(HighlighterFactory.createAlternateStriping());
         this.table.addHighlighter(new AbstractHighlighter(HighlightPredicate.ALWAYS) {
 
             @Override
