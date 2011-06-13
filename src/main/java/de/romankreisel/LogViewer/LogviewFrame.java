@@ -61,6 +61,11 @@ public class LogviewFrame extends JFrame {
      *             if GraphicsEnvironment.isHeadless() returns true.
      */
     public LogviewFrame() throws HeadlessException {
+        if (this.getClass().getPackage().getImplementationTitle() != null
+                && this.getClass().getPackage().getImplementationVersion() != null) {
+            this.frameTitle = this.getClass().getPackage().getImplementationTitle() + " "
+                    + this.getClass().getPackage().getImplementationVersion();
+        }
         this.setTitle(this.frameTitle);
         JPanel southPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) southPanel.getLayout();
