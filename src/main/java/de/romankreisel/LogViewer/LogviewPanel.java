@@ -8,6 +8,8 @@ package de.romankreisel.LogViewer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +34,7 @@ import org.jdesktop.swingx.decorator.HighlighterFactory;
  * 
  * @author Roman Kreisel <mail@romankreisel.de>
  */
-public class LogviewPanel extends JPanel implements ListSelectionListener {
+public class LogviewPanel extends JPanel implements ListSelectionListener, ComponentListener, MemoryHandlerListener {
     /**
      *
      */
@@ -41,6 +43,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
     private final JXTable table;
     private LogTableModel tableModel;
     private final JSplitPane splitPane;
+    private MemoryHandler memoryHandler = null;
     private static final String EMPTY_TEXT = "<html><h1>Select line from log to inspect content</h1><html>";
 
     /**
@@ -88,6 +91,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
             }
         });
         this.splitPane.setLeftComponent(new JScrollPane(this.table));
+        this.splitPane.setResizeWeight(0.5);
         this.init();
     }
 
@@ -98,6 +102,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         this.tableModel = new LogTableModel();
         this.table.setModel(this.tableModel);
         this.table.getSelectionModel().addListSelectionListener(this);
+        this.addComponentListener(this);
     }
 
     /**
@@ -127,7 +132,37 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
      *            show this records in LogviewPanel
      */
     public void setLogRecords(List<LogRecord> logRecords) {
+        if (this.memoryHandler != null) {
+            this.memoryHandler.removeListener(this);
+            this.memoryHandler = null;
+        }
         this.tableModel.setLogRecords(logRecords);
+        this.packTable();
+    }
+
+    /**
+     * Show records from MemoryHandler in this LogviewPanel.
+     * 
+     * @param memoryHandler
+     *            The source of the LogRecords.
+     */
+    public void setMemoryHandler(MemoryHandler memoryHandler) {
+        if (this.memoryHandler != null) {
+            this.memoryHandler.removeListener(this);
+            this.memoryHandler = null;
+        }
+        if (memoryHandler != null) {
+            this.memoryHandler = memoryHandler;
+            this.memoryHandler.addListener(this);
+            this.tableModel.setLogRecords(this.memoryHandler.getRecords());
+            this.packTable();
+        }
+    }
+
+    /**
+     * Resizes the columns of the table.
+     */
+    private void packTable() {
         int totalSize = 0;
         this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
         this.table.packColumn(LogTableModel.COLUMN_MESSAGE, 0);
@@ -137,7 +172,7 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
                 totalSize += this.table.getColumnExt(i).getPreferredWidth();
             }
         }
-        this.table.packColumn(LogTableModel.COLUMN_MESSAGE, 0, this.table.getWidth() - (50 + totalSize));
+        this.table.packColumn(LogTableModel.COLUMN_MESSAGE, 0, this.table.getWidth() - (totalSize));
         this.table.setAutoResizeMode(JXTable.AUTO_RESIZE_LAST_COLUMN);
     }
 
@@ -158,22 +193,27 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
         if (record != null) {
             StringBuffer sb = new StringBuffer();
             sb.append("<html>");
+            sb.append("<h1>Details</h1>");
             sb.append("<table>");
-            sb.append("<tr><td><b>Logger:</td><td>" + record.getLoggerName() + "</tr>");
-            sb.append("<tr><td><b>Sequence:</b></td><td>" + record.getSequenceNumber() + "</tr>");
-            sb.append("<tr><td><b>Time:</b></td><td>" + new SimpleDateFormat().format(new Date(record.getMillis()))
-                    + "</tr>");
-            sb.append("<tr><td><b>Source-class:</b></td><td>" + record.getSourceClassName() + "</tr>");
-            sb.append("<tr><td><b>Source-method:</b></td><td>" + record.getSourceMethodName() + "</tr>");
-            sb.append("<tr><td><b>Thread-ID:</b></td><td>" + record.getThreadID() + "</tr>");
-            sb.append("<tr><td><b>Level:</b></td><td>" + record.getLevel() + "</tr>");
-            sb.append("<tr><td><b>Message:</b></td><td>" + record.getMessage() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Logger:</td><td>" + record.getLoggerName() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Sequence:</b></td><td>" + record.getSequenceNumber() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Time:</b></td><td>"
+                    + new SimpleDateFormat().format(new Date(record.getMillis())) + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Source-class:</b></td><td>" + record.getSourceClassName() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Source-method:</b></td><td>" + record.getSourceMethodName() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Thread-ID:</b></td><td>" + record.getThreadID() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Level:</b></td><td>" + record.getLevel() + "</tr>");
+            sb.append("<tr><td valign=\"top\"><b>Message:</b></td><td>" + record.getMessage() + "</tr>");
             sb.append("</table>");
             sb.append("<hr />");
             if (record.getThrown() != null) {
                 Throwable throwable = record.getThrown();
+                sb.append("<h2>Exception:</h2>");
+                sb.append("<table>");
+                sb.append("<tr><td valign=\"top\"><b>Type:</td><td>" + throwable.getClass().getName() + "</tr>");
+                sb.append("<tr><td valign=\"top\"><b>Message:</td><td>" + throwable.getMessage() + "</tr>");
                 if (throwable.getStackTrace() != null) {
-                    sb.append("<b>Stacktrace:</b><br /><table>");
+                    sb.append("<tr><td valign=\"top\"><b>Stacktrace:</td><td><table>");
                     for (int i = 0; i < throwable.getStackTrace().length; ++i) {
                         sb.append("<tr><td>" + throwable.getStackTrace()[i].getClassName() + "</td><td>");
                         if (throwable.getStackTrace()[i].getLineNumber() > 0) {
@@ -181,13 +221,38 @@ public class LogviewPanel extends JPanel implements ListSelectionListener {
                         }
                         sb.append("</td></tr>");
                     }
-                    sb.append("</table>");
+                    sb.append("</table></td></tr></table>");
                 }
             }
             sb.append("</html>");
-            this.textPane.setText(sb.toString());
+            String text = sb.toString();
+            this.textPane.setText(text);
         } else {
             this.textPane.setText(LogviewPanel.EMPTY_TEXT);
         }
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        this.packTable();
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+    }
+
+    @Override
+    public void logRecordInserted(MemoryHandler memoryHandler, boolean removedOldMessages) {
+        this.tableModel.setLogRecords(memoryHandler.getRecords());
+        this.tableModel.fireTableDataChanged();
+        this.packTable();
     }
 }

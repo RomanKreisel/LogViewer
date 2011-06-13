@@ -134,5 +134,4 @@ public class LogviewFrame extends JFrame {
     public LogviewPanel getLogviewPanel() {
         return this.logviewPanel;
     }
-
 }
