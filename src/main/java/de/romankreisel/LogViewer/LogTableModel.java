@@ -91,12 +91,16 @@ public class LogTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.allLogRecords.size();
+        return this.shownRecords.size();
     }
 
     @Override
     public Object getValueAt(int row, int column) {
-        LogRecord record = this.allLogRecords.get(row);
+        LogRecord record = this.shownRecords.get(row);
+        if (record == null) {
+            System.out.println("Record is NULL!");
+            return null;
+        }
         String retVal;
         switch (column) {
         case COLUMN_SEQUENCE:
@@ -109,12 +113,15 @@ public class LogTableModel extends AbstractTableModel {
             return record.getMessage();
         case COLUMN_SOURCE_CLASS:
             retVal = record.getSourceClassName();
-            if (retVal.contains(".") && retVal.indexOf(".") != retVal.length()) {
-                retVal = retVal.substring(retVal.lastIndexOf('.') + 1);
+            if (retVal != null) {
+                if (retVal.contains(".") && retVal.lastIndexOf(".") != retVal.length()) {
+                    retVal = retVal.substring(retVal.lastIndexOf('.') + 1);
 
+                }
+                return retVal;
+            } else {
+                return "";
             }
-            return retVal;
-
         case COLUMN_SOURCE_METHOD:
             return record.getSourceMethodName();
         case COLUMN_THREAD_ID:

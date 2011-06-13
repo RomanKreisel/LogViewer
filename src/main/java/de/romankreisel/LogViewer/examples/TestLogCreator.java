@@ -3,7 +3,7 @@
  * This file is licensed under the terms of the GNU Lesser General Public License 2.1
  * http://www.gnu.org/licenses/lgpl-2.1.txt
  */
-package de.romankreisel.LogViewer.mock;
+package de.romankreisel.LogViewer.examples;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -67,7 +67,7 @@ public final class TestLogCreator {
      * @param logger
      *            to fill with records.
      */
-    private static void appendAllLogRecords(Logger logger) {
+    public static void appendAllLogRecords(Logger logger) {
         TestLogCreator.appendSimpleLogRecords(logger);
         TestLogCreator.appendComplextLogRecords(logger);
     }

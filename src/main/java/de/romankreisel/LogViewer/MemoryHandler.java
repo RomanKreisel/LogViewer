@@ -20,6 +20,7 @@ public class MemoryHandler extends Handler {
 
     private final int size;
     private final LinkedList<LogRecord> records;
+    private LinkedList<MemoryHandlerListener> listeners = new LinkedList<MemoryHandlerListener>();
 
     /**
      * @param size
@@ -40,10 +41,16 @@ public class MemoryHandler extends Handler {
 
     @Override
     public void publish(LogRecord record) {
+        boolean removedOldMessage = false;
         if (this.records.size() >= this.size) {
             this.records.remove(0);
+            removedOldMessage = true;
         }
         this.records.add(record);
+        for (MemoryHandlerListener listener : this.listeners) {
+            listener.logRecordInserted(this, removedOldMessage);
+        }
+
     }
 
     /**
@@ -51,6 +58,26 @@ public class MemoryHandler extends Handler {
      */
     public LinkedList<LogRecord> getRecords() {
         return this.records;
+    }
+
+    /**
+     * Adds a new Listener to this MemoryHandler.
+     * 
+     * @param listener
+     *            Listener to add to this MemoryHandler.
+     */
+    public void addListener(MemoryHandlerListener listener) {
+        this.listeners.add(listener);
+    }
+
+    /**
+     * Removes a Listener from this MemoryHandler.
+     * 
+     * @param listener
+     *            Listener to remove from this MemoryHandler.
+     */
+    public void removeListener(MemoryHandlerListener listener) {
+        this.listeners.remove(listener);
     }
 
 }
