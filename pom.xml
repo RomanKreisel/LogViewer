@@ -4,7 +4,7 @@
 
 	<groupId>de.romankreisel</groupId>
 	<artifactId>LogViewer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9.0</version>
 	<packaging>jar</packaging>
 
 	<name>LogViewer</name>
@@ -125,13 +125,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<extensions>
-			<extension>
-				<groupId>org.kathrynhuxtable.maven.wagon</groupId>
-				<artifactId>wagon-gitsite</artifactId>
-				<version>0.3.1</version>
-			</extension>
-		</extensions>
 	</build>
 	<dependencies>
 		<dependency>
