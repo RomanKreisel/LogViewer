@@ -6,3 +6,5 @@
 /*.log
 /.checkstyle
 .fbprefs
+/target
+/bin
